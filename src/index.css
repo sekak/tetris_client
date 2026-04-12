@@ -28,10 +28,10 @@
   --color-accent:       oklch(95% 0.20 105);   /* yellow */
   --color-destructive:  oklch(55% 0.25 25);    /* red */
 
-  /* ─── Glow (box-shadow / text-shadow via var()) ────────────────────────── */
-  --glow-cyan:    0 0 10px oklch(78% 0.17 192 / 0.6), 0 0 30px oklch(78% 0.17 192 / 0.3);
-  --glow-magenta: 0 0 10px oklch(65% 0.28 328 / 0.6), 0 0 30px oklch(65% 0.28 328 / 0.3);
-  --glow-yellow:  0 0 10px oklch(95% 0.20 105 / 0.6), 0 0 30px oklch(95% 0.20 105 / 0.3);
+  /* ─── shadow (box-shadow / text-shadow via var()) ────────────────────────── */
+  --shadow-cyan:    0 0 10px oklch(78% 0.17 192 / 0.6), 0 0 30px oklch(78% 0.17 192 / 0.3);
+  --shadow-magenta: 0 0 10px oklch(65% 0.28 328 / 0.6), 0 0 30px oklch(65% 0.28 328 / 0.3);
+  --shadow-yellow:  0 0 10px oklch(95% 0.20 105 / 0.6), 0 0 30px oklch(95% 0.20 105 / 0.3);
 
   /* ─── Typographie ───────────────────────────────────────────────────────── */
   --font-pixel: 'Press Start 2P', monospace;
@@ -40,21 +40,21 @@
   --radius: 0.25rem;
 }
 
-/* ─── Utilitaires glow ───────────────────────────────────────────────────── */
-@utility text-glow-cyan {
-  text-shadow: var(--glow-cyan);
+/* ─── Utilitaires shadow ───────────────────────────────────────────────────── */
+@utility text-shadow-cyan {
+  text-shadow: var(--shadow-cyan);
 }
-@utility text-glow-magenta {
-  text-shadow: var(--glow-magenta);
+@utility text-shadow-magenta {
+  text-shadow: var(--shadow-magenta);
 }
-@utility text-glow-yellow {
-  text-shadow: var(--glow-yellow);
+@utility text-shadow-yellow {
+  text-shadow: var(--shadow-yellow);
 }
-@utility box-glow-cyan {
-  box-shadow: var(--glow-cyan);
+@utility box-shadow-cyan {
+  box-shadow: var(--shadow-cyan);
 }
-@utility box-glow-magenta {
-  box-shadow: var(--glow-magenta);
+@utility box-shadow-magenta {
+  box-shadow: var(--shadow-magenta);
 }
 
 body {
