@@ -1,18 +1,11 @@
 import { motion } from 'framer-motion'
-import bgGrid from '../assets/background-grid.jpg'
-import Interact from '../components/interact'
+import GameEntry from '../components/GameEntry'
 
 const Home = () => {
     return (
         <main
-            className='min-h-screen flex flex-col items-center justify-center gap-9 p-4'
-            style={{
-                backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${bgGrid})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-            }}
-        >
+            className='min-h-screen flex flex-col items-center justify-center gap-9 p-4 bg-img'
+            >
             <motion.h1
                 className="text-5xl md:text-6xl text-primary text-shadow-cyan text-center relative z-10 font-bold"
                 initial={{ y: -40, opacity: 0 }}
@@ -31,8 +24,8 @@ const Home = () => {
                 MULTIPLAYER BATTLE
             </motion.p>
 
-            {/* Interact component for user input and button */}
-            <Interact />
+            {/* GameEntry component for user input and button */}
+            <GameEntry />
             
         </main>
     )

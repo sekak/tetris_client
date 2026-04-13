@@ -14,7 +14,7 @@ interface ButtonProps {
 
 const Button = ({ text, onClick, variant, disabled = false, isAnimate = false, delay = 0, initial, animate, props }: ButtonProps) => {
 
-    const baseClasses = "w-full text-xs cursor-pointer p-3 font-pixel transition-colors"
+    const baseClasses = "w-full text-[9px] cursor-pointer py-3.5 font-pixel transition-colors"
     const variantClasses = variant === 'primary'
         ? "bg-primary text-gray-800 hover:bg-primary/80 box-shadow-cyan"
         : variant === 'secondary' ? "border border-secondary text-secondary hover:bg-secondary/20"

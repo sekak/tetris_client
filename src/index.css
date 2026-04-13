@@ -67,3 +67,9 @@ body {
 #root {
   min-height: 100svh;
 }
+
+.bg-img {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('./assets/background-grid.jpg');
+  background-size: cover;
+  background-position: center;
+}
