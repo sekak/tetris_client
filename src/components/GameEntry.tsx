@@ -1,16 +1,33 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import Button from './ui/button'
 import Input from './ui/input'
 import HowToPlay from './HowToPlay'
 
-const GameEntry = () => {
+const generateRoomId = () =>
+    Math.random().toString(36).slice(2, 8).toUpperCase()
 
+const GameEntry = () => {
+    const navigate = useNavigate()
     const [mode, setMode] = useState<'' | 'create' | 'join'>('')
     const [pseudo, setPseudo] = useState<string>('')
     const [gameCode, setGameCode] = useState<string>('')
 
     const handleCreation = () => {
         setMode('create')
+    }
+
+    const handleCreate = () => {
+        if (!pseudo.trim()) return
+        const roomId = generateRoomId()
+        navigate(`/lobby/${roomId}`, { state: { playerName: pseudo.trim() } })
+    }
+
+    const handleJoin = () => {
+        if (!pseudo.trim() || !gameCode.trim()) return
+        navigate(`/lobby/${gameCode.trim().toUpperCase()}`, {
+            state: { playerName: pseudo.trim() },
+        })
     }
 
     return (
@@ -70,7 +87,7 @@ const GameEntry = () => {
                 <div className="flex flex-col gap-2">
                     <Button
                         text="CRÉER"
-                        onClick={() => { }}
+                        onClick={handleCreate}
                         variant="accent"
                         disabled={!pseudo.trim()}
                     />
@@ -86,7 +103,7 @@ const GameEntry = () => {
                 <div className="flex flex-col gap-2">
                     <Button
                         text="REJOINDRE"
-                        onClick={() => { }}
+                        onClick={handleJoin}
                         variant="accent"
                         disabled={!gameCode.trim() || !pseudo.trim()}
                     />
