@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+output=$(echo ./client/node_modules/.bin/commitlint --config client/commitlint.config.js)
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Message de commit invalide !"
+  echo ""
+  echo "$output"
+  echo ""
+  echo "Format attendu : <type>(<scope optionnel>): <description>"
+  echo ""
+  echo "Types valides : feat | fix | docs | style | refactor | test | chore | perf | ci | revert"
+  echo ""
+  echo "Exemples :"
+  echo "  feat: ajouter la page lobby"
+  echo "  fix(auth): corriger la validation du token"
+  echo "  chore: mettre à jour les dépendances"
+  echo ""
+  exit 1
+fi
