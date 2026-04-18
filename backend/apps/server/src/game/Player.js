@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const { createGrid } = require('./logic');
-const { createPiece } = require('./Piece');
+const { createGrid } = require('./logic')
+const { createPiece } = require('./Piece')
 
 /**
  * Represents a single connected player.
@@ -13,26 +13,26 @@ class Player {
    * @param {string} name
    */
   constructor(socketId, name) {
-    this.socketId = socketId;
-    this.name = name;
+    this.socketId = socketId
+    this.name = name
 
     // Room meta
-    this.isHost = false;
+    this.isHost = false
 
     // Per-game state (reset on each new game)
-    this.alive = false;
-    this.grid = createGrid();
-    this.currentPiece = null;
-    this.nextPiece = null;
-    this.pieceIndex = 0;
-    this.score = 0;
-    this.level = 0;
-    this.linesCleared = 0;
-    this.pendingGarbage = 0;
-    this.gravityTimer = 0; // ms elapsed since last automatic drop
+    this.alive = false
+    this.grid = createGrid()
+    this.currentPiece = null
+    this.nextPiece = null
+    this.pieceIndex = 0
+    this.score = 0
+    this.level = 0
+    this.linesCleared = 0
+    this.pendingGarbage = 0
+    this.gravityTimer = 0 // ms elapsed since last automatic drop
 
     // Spectrum sent to other players
-    this.spectrum = new Array(10).fill(0);
+    this.spectrum = new Array(10).fill(0)
   }
 
   /**
@@ -41,15 +41,15 @@ class Player {
    * @param {number[]} pieceSequence  shared sequence of piece-type indices
    */
   spawnPiece(pieceSequence) {
-    const len = pieceSequence.length;
+    const len = pieceSequence.length
     if (this.nextPiece === null) {
       // First spawn: assign both slots
-      this.currentPiece = createPiece(pieceSequence[this.pieceIndex++ % len]);
-      this.nextPiece = createPiece(pieceSequence[this.pieceIndex++ % len]);
+      this.currentPiece = createPiece(pieceSequence[this.pieceIndex++ % len])
+      this.nextPiece = createPiece(pieceSequence[this.pieceIndex++ % len])
     } else {
       // Subsequent spawns: advance the window
-      this.currentPiece = this.nextPiece;
-      this.nextPiece = createPiece(pieceSequence[this.pieceIndex++ % len]);
+      this.currentPiece = this.nextPiece
+      this.nextPiece = createPiece(pieceSequence[this.pieceIndex++ % len])
     }
   }
 
@@ -69,8 +69,8 @@ class Player {
       level: this.level,
       linesCleared: this.linesCleared,
       spectrum: this.spectrum,
-    };
+    }
   }
 }
 
-module.exports = Player;
+module.exports = Player

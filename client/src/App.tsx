@@ -1,14 +1,12 @@
-import Home from "./pages/home"
+import Home from './pages/home'
 import { Routes, Route } from 'react-router'
-import Lobby from "./pages/lobby"
-
+import Game from './pages/game'
 
 function App() {
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/lobby/:roomId" element={<Lobby />} />
+      <Route path="/:roomId/:playerName" element={<Game />} />
     </Routes>
   )
 }

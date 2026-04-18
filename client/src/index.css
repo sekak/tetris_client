@@ -1,37 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-@import "tailwindcss";
-
+@import 'tailwindcss';
 
 @theme {
   /* ─── Couleurs neon (Tailwind utilities: text-neon-cyan, bg-neon-cyan ...) ── */
-  --color-neon-cyan:    oklch(78% 0.17 192);
+  --color-neon-cyan: oklch(78% 0.17 192);
   --color-neon-magenta: oklch(65% 0.28 328);
-  --color-neon-yellow:  oklch(95% 0.20 105);
-  --color-neon-green:   oklch(72% 0.25 145);
-  --color-neon-orange:  oklch(72% 0.20 50);
-  --color-neon-red:     oklch(55% 0.25 25);
-  --color-neon-blue:    oklch(55% 0.25 265);
+  --color-neon-yellow: oklch(95% 0.2 105);
+  --color-neon-green: oklch(72% 0.25 145);
+  --color-neon-orange: oklch(72% 0.2 50);
+  --color-neon-red: oklch(55% 0.25 25);
+  --color-neon-blue: oklch(55% 0.25 265);
 
   /* ─── Couleurs de surface ──────────────────────────────────────────────── */
-  --color-background:   oklch(13% 0.03 240);
-  --color-surface:      oklch(17% 0.04 240);
-  --color-card:         oklch(20% 0.04 240);
-  --color-border:       oklch(28% 0.04 240);
+  --color-background: oklch(13% 0.03 240);
+  --color-surface: oklch(17% 0.04 240);
+  --color-card: oklch(20% 0.04 240);
+  --color-border: oklch(28% 0.04 240);
 
   /* ─── Texte ────────────────────────────────────────────────────────────── */
-  --color-foreground:   oklch(92% 0.05 192);
-  --color-muted:        oklch(55% 0.03 240);
+  --color-foreground: oklch(92% 0.05 192);
+  --color-muted: oklch(55% 0.03 240);
 
   /* ─── Semantiques ──────────────────────────────────────────────────────── */
-  --color-primary:      oklch(78% 0.17 192);   /* cyan  */
-  --color-secondary:    oklch(65% 0.28 328);   /* magenta */
-  --color-accent:       oklch(95% 0.20 105);   /* yellow */
-  --color-destructive:  oklch(55% 0.25 25);    /* red */
+  --color-primary: oklch(78% 0.17 192); /* cyan  */
+  --color-secondary: oklch(65% 0.28 328); /* magenta */
+  --color-accent: oklch(95% 0.2 105); /* yellow */
+  --color-destructive: oklch(55% 0.25 25); /* red */
 
   /* ─── shadow (box-shadow / text-shadow via var()) ────────────────────────── */
-  --shadow-cyan:    0 0 10px oklch(78% 0.17 192 / 0.6), 0 0 30px oklch(78% 0.17 192 / 0.3);
+  --shadow-cyan: 0 0 10px oklch(78% 0.17 192 / 0.6), 0 0 30px oklch(78% 0.17 192 / 0.3);
   --shadow-magenta: 0 0 10px oklch(65% 0.28 328 / 0.6), 0 0 30px oklch(65% 0.28 328 / 0.3);
-  --shadow-yellow:  0 0 10px oklch(95% 0.20 105 / 0.6), 0 0 30px oklch(95% 0.20 105 / 0.3);
+  --shadow-yellow: 0 0 10px oklch(95% 0.2 105 / 0.6), 0 0 30px oklch(95% 0.2 105 / 0.3);
 
   /* ─── Typographie ───────────────────────────────────────────────────────── */
   --font-pixel: 'Press Start 2P', monospace;
@@ -69,7 +68,8 @@ body {
 }
 
 .bg-img {
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('./assets/background-grid.jpg');
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./assets/background-grid.jpg');
   background-size: cover;
   background-position: center;
 }

@@ -19,13 +19,13 @@ npm install socket.io-client
 ### Connect to the server
 
 ```js
-import { io } from 'socket.io-client';
+import { io } from 'socket.io-client'
 
-const socket = io('http://localhost:4000');
+const socket = io('http://localhost:4000')
 
 socket.on('connect', () => {
-  console.log('connected:', socket.id);
-});
+  console.log('connected:', socket.id)
+})
 ```
 
 > The server runs on **port 4000** (`http://localhost:4000`).  
@@ -37,16 +37,16 @@ socket.on('connect', () => {
 
 You do **not** need to implement any of this on the frontend:
 
-| Done on server | What it means for you |
-|---|---|
-| Piece gravity (auto-drop) | You never run a timer to move pieces down |
-| Collision detection | You never check if a move is valid before sending it |
-| Line clearing | You never scan the grid — just render what you receive |
-| Garbage lines | They appear automatically in the grid you receive |
-| Piece sequence | Every player gets the same pieces — you just display `currentPiece` |
-| Score & level | Calculated server-side, sent in every `game_state` |
-| Winner detection | Server fires `game_over` when the last player dies |
-| Host reassignment | Done automatically when host disconnects |
+| Done on server            | What it means for you                                               |
+| ------------------------- | ------------------------------------------------------------------- |
+| Piece gravity (auto-drop) | You never run a timer to move pieces down                           |
+| Collision detection       | You never check if a move is valid before sending it                |
+| Line clearing             | You never scan the grid — just render what you receive              |
+| Garbage lines             | They appear automatically in the grid you receive                   |
+| Piece sequence            | Every player gets the same pieces — you just display `currentPiece` |
+| Score & level             | Calculated server-side, sent in every `game_state`                  |
+| Winner detection          | Server fires `game_over` when the last player dies                  |
+| Host reassignment         | Done automatically when host disconnects                            |
 
 ---
 
@@ -116,9 +116,9 @@ Call this when the player submits the join form.
 
 ```js
 socket.emit('join_room', {
-  roomId: 'my-room',      // string, max 64 chars
-  playerName: 'Alice',    // string, max 32 chars
-});
+  roomId: 'my-room', // string, max 64 chars
+  playerName: 'Alice', // string, max 32 chars
+})
 ```
 
 **Receives back:**
@@ -133,7 +133,7 @@ socket.emit('join_room', {
 Only the **host** can call this. Show the button only to `player.isHost === true`.
 
 ```js
-socket.emit('start_game');
+socket.emit('start_game')
 ```
 
 **Receives back:**
@@ -147,9 +147,9 @@ socket.emit('start_game');
 Send on **ArrowLeft**, **ArrowRight**, or **ArrowDown** keypress.
 
 ```js
-socket.emit('move', { direction: 'left' });   // ArrowLeft
-socket.emit('move', { direction: 'right' });  // ArrowRight
-socket.emit('move', { direction: 'down' });   // ArrowDown (soft drop)
+socket.emit('move', { direction: 'left' }) // ArrowLeft
+socket.emit('move', { direction: 'right' }) // ArrowRight
+socket.emit('move', { direction: 'down' }) // ArrowDown (soft drop)
 ```
 
 ---
@@ -159,7 +159,7 @@ socket.emit('move', { direction: 'down' });   // ArrowDown (soft drop)
 Send on **ArrowUp** (or whatever rotate key you choose).
 
 ```js
-socket.emit('rotate');
+socket.emit('rotate')
 ```
 
 ---
@@ -169,7 +169,7 @@ socket.emit('rotate');
 Send on **Space** for instant hard drop.
 
 ```js
-socket.emit('drop');
+socket.emit('drop')
 ```
 
 ---
@@ -179,7 +179,7 @@ socket.emit('drop');
 Only the **host** can call this, and only after a game has finished.
 
 ```js
-socket.emit('restart_game');
+socket.emit('restart_game')
 ```
 
 **Receives back:**
@@ -201,7 +201,7 @@ socket.on('room_joined', ({ roomId, player, players }) => {
   // player = your own player object
   // players = all players currently in the room (including you)
   // → navigate to the lobby / waiting screen
-});
+})
 ```
 
 ---
@@ -213,7 +213,7 @@ Fired to **everyone already in the room** when a new player arrives.
 ```js
 socket.on('player_joined', ({ player }) => {
   // → add player to the lobby player list
-});
+})
 ```
 
 ---
@@ -226,7 +226,7 @@ Fired to **everyone** when the host starts the game.
 socket.on('game_started', ({ players }) => {
   // → switch to the game screen
   // → render each player's grid
-});
+})
 ```
 
 ---
@@ -244,7 +244,7 @@ socket.on('game_state', ({ roomId, status, players }) => {
   // → find your own player: players.find(p => p.socketId === socket.id)
   // → render your grid + current piece
   // → render other players' spectrums (their column heights)
-});
+})
 ```
 
 ---
@@ -257,7 +257,7 @@ Fired to **everyone** when a single player is eliminated (dies).
 socket.on('player_game_over', ({ socketId, name }) => {
   // → show "X was eliminated" message
   // → grey out that player's grid
-});
+})
 ```
 
 ---
@@ -272,7 +272,7 @@ socket.on('game_over', ({ winner, players }) => {
   // players: final state of all players
   // → show winner screen
   // → show restart button to host
-});
+})
 ```
 
 ---
@@ -285,7 +285,7 @@ Fired to **everyone** when the host restarts after a finished game.
 socket.on('game_reset', ({ players }) => {
   // → reset all grids to empty
   // → go back to the waiting / lobby screen
-});
+})
 ```
 
 ---
@@ -299,7 +299,7 @@ socket.on('player_left', ({ socketId, name, newHost }) => {
   // newHost: player object of the new host (or null if room is empty)
   // → remove player from UI
   // → if newHost.socketId === socket.id → show Start button to you
-});
+})
 ```
 
 ---
@@ -316,7 +316,7 @@ socket.on('error', ({ message }) => {
   //   "Only the host can start the game"
   //   "Only the host can restart the game"
   // → show the message to the user
-});
+})
 ```
 
 ---
@@ -328,20 +328,20 @@ The grid is a 2D array. Here is a minimal React example:
 ```jsx
 function Grid({ grid, currentPiece }) {
   // Merge the falling piece into the grid for display
-  const display = grid.map(row => [...row]);
+  const display = grid.map((row) => [...row])
 
   if (currentPiece) {
     currentPiece.shape.forEach((row, dy) => {
       row.forEach((cell, dx) => {
         if (cell !== 0) {
-          const r = currentPiece.y + dy;
-          const c = currentPiece.x + dx;
+          const r = currentPiece.y + dy
+          const c = currentPiece.x + dx
           if (r >= 0 && r < 20 && c >= 0 && c < 10) {
-            display[r][c] = cell;
+            display[r][c] = cell
           }
         }
-      });
-    });
+      })
+    })
   }
 
   return (
@@ -358,20 +358,20 @@ function Grid({ grid, currentPiece }) {
         />
       ))}
     </div>
-  );
+  )
 }
 
 const COLORS = {
-  0: '#111',        // empty
-  1: '#00f0f0',     // I
-  2: '#f0f000',     // O
-  3: '#a000f0',     // T
-  4: '#00f000',     // S
-  5: '#f00000',     // Z
-  6: '#0000f0',     // J
-  7: '#f0a000',     // L
-  8: '#555',        // garbage
-};
+  0: '#111', // empty
+  1: '#00f0f0', // I
+  2: '#f0f000', // O
+  3: '#a000f0', // T
+  4: '#00f000', // S
+  5: '#f00000', // Z
+  6: '#0000f0', // J
+  7: '#f0a000', // L
+  8: '#555', // garbage
+}
 ```
 
 ---
@@ -382,16 +382,26 @@ const COLORS = {
 useEffect(() => {
   const handleKey = (e) => {
     switch (e.key) {
-      case 'ArrowLeft':  socket.emit('move', { direction: 'left' });  break;
-      case 'ArrowRight': socket.emit('move', { direction: 'right' }); break;
-      case 'ArrowDown':  socket.emit('move', { direction: 'down' });  break;
-      case 'ArrowUp':    socket.emit('rotate');                        break;
-      case ' ':          socket.emit('drop');                          break;
+      case 'ArrowLeft':
+        socket.emit('move', { direction: 'left' })
+        break
+      case 'ArrowRight':
+        socket.emit('move', { direction: 'right' })
+        break
+      case 'ArrowDown':
+        socket.emit('move', { direction: 'down' })
+        break
+      case 'ArrowUp':
+        socket.emit('rotate')
+        break
+      case ' ':
+        socket.emit('drop')
+        break
     }
-  };
-  window.addEventListener('keydown', handleKey);
-  return () => window.removeEventListener('keydown', handleKey);
-}, [socket]);
+  }
+  window.addEventListener('keydown', handleKey)
+  return () => window.removeEventListener('keydown', handleKey)
+}, [socket])
 ```
 
 ---
@@ -407,18 +417,21 @@ function Spectrum({ spectrum }) {
   return (
     <div style={{ display: 'flex', gap: 2 }}>
       {spectrum.map((height, col) => (
-        <div key={col} style={{
-          width: 12,
-          height: 200,   // fixed container height
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-        }}>
+        <div
+          key={col}
+          style={{
+            width: 12,
+            height: 200, // fixed container height
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+          }}
+        >
           <div style={{ height: `${(height / 20) * 100}%`, background: '#888' }} />
         </div>
       ))}
     </div>
-  );
+  )
 }
 ```
 
