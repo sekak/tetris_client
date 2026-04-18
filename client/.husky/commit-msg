@@ -1,12 +1,4 @@
-#!/usr/bin/env sh
-
-output=$(echo ./client/node_modules/.bin/commitlint --config client/commitlint.config.js)
-
-if [ $? -ne 0 ]; then
-  echo ""
-  echo "❌ Message de commit invalide !"
-  echo ""
-  echo "$output"
+if ! ./client/node_modules/.bin/commitlint --edit "$1" --config client/commitlint.config.js; then
   echo ""
   echo "Format attendu : <type>(<scope optionnel>): <description>"
   echo ""
