@@ -1,11 +1,68 @@
-import React from 'react'
-import Lobby from './lobby'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router'
+import socket from '../lib/socket'
+import TetrisBoard from '../components/Board'
+import NextPiece from '../components/NextPiece'
+import GameInfo from '../components/GameInfo'
+import GameOver from '../components/GameOver'
+import Lobby from '../components/lobby'
 
 const Game = () => {
-  console.log('game')
+  const state = useSelector((state: any) => state)
+  const { roomId, playerName } = useParams<{ roomId: string; playerName: string }>()
+
+  const handleLancerPartie = () => {
+    socket.emit('start_game')
+  }
+
+  console.log(state)
+
   return (
-    <div>
-      <Lobby />
+    <div className="h-screen flex flex-col items-center justify-center w-full bg-img">
+      {state.gameStarted ? (
+        <>
+          {/* header */}
+          <div className="flex items-center gap-4 mb-10">
+            <span>ROOM {roomId}</span>
+            <span>Player: {playerName}</span>
+          </div>
+
+          <div className="flex items-start gap-10">
+            {/* opponents */}
+            <span>opponents</span>
+            {/* Main board */}
+            <div>
+              <TetrisBoard
+                board={state.grid}
+                currentPiece={state.currentPiece}
+                ghostPiece={state.ghostPiece}
+              />
+            </div>
+            {/* side panel */}
+            <div>
+              <NextPiece piece={state.nextPiece} />
+              <GameInfo score={state.score} level={state.level} linesCleared={state.linesCleared} />
+              {state.gameOver && (
+                <div>
+                  <GameOver winner={state.winner} />
+                  {state.isHost ? (
+                    <button onClick={handleLancerPartie}>REJOUER</button>
+                  ) : (
+                    <p>En attente du host...</p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      ) : (
+        <Lobby
+          roomId={roomId!}
+          playerName={playerName!}
+          LancerPartie={handleLancerPartie}
+          state={state}
+        />
+      )}
     </div>
   )
 }

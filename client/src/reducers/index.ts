@@ -25,23 +25,22 @@ import type { Player } from '../types/tetris'
 // const EMPTY_BOARD: Board = Array.from({ length: 20 }, () => Array(10).fill(null))
 
 const INITIAL_STATE = {
-  socketId: null,
-  connected: false,
-  roomId: null,
-  playerName: null,
-  players: [],
-  isHost: false,
-  gameStarted: false,
-  //   board: EMPTY_BOARD,
+  alive: false,
   currentPiece: null,
+  grid: null,
+  isHost: false,
+  level: 0,
+  linesCleared: 0,
+  name: null,
   nextPiece: null,
-  opponents: [],
+  score: 0,
+  socketId: null,
+  spectrum: [],
+  players: [],
+  roomId: null,
+  gameStarted: false,
   gameOver: false,
   winner: null,
-  linesCleared: 0,
-  score: 0,
-  level: 0,
-  error: null,
 }
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -54,21 +53,19 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
     case 'ROOM_JOINED': {
       const { roomId, player, players } = action.payload
-
-      const exists = state.players.some((p: Player) => p.socketId === player.socketId)
-      if (exists) return state
-
       return {
         ...state,
         roomId,
         playerName: player.name,
         isHost: player.isHost,
+        grid: player.grid,
         players,
         error: null,
       }
     }
     case 'PLAYER_JOINED': {
       const { player } = action.payload
+      if (state.players.some((p: Player) => p.socketId === player.socketId)) return state
       return { ...state, players: [...state.players, player] }
     }
 
@@ -85,6 +82,31 @@ const reducer = (state = INITIAL_STATE, action: any) => {
       const isHost = newHost ? newHost.socketId === state.socketId : state.isHost
 
       return { ...state, players, isHost }
+    }
+
+    case 'GAME_STARTED':
+      return {
+        ...state,
+        gameStarted: true,
+        gameOver: false,
+        winner: null,
+      }
+
+    case 'GAME_STATE_UPDATE': {
+      const { players } = action.payload
+      const me = players.find((p: any) => p.socketId === state.socketId)
+
+      if (!me) return state
+      return {
+        ...state,
+        grid: me.grid,
+        currentPiece: me.currentPiece,
+        nextPiece: me.nextPiece,
+        score: me.score,
+        level: me.level,
+        linesCleared: me.linesCleared,
+        spectrum: me.spectrum,
+      }
     }
 
     // case 'SOCKET_CONNECTED':

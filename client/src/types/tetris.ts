@@ -54,3 +54,6 @@ export type GameState = {
   winner: string | null
   linesCleared: number
 }
+
+export const BOARD_WIDTH = 10
+export const BOARD_HEIGHT = 20
