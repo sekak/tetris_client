@@ -1,18 +1,32 @@
-import { BOARD_WIDTH, BOARD_HEIGHT } from '../types/tetris'
-
-const CELL_COLORS: Record<number, string> = {
-  0: 'oklch(17% 0.04 240)',
-  1: 'oklch(78% 0.17 192)',
-  2: 'oklch(95% 0.20 105)',
-  3: 'oklch(65% 0.28 328)',
-  4: 'oklch(72% 0.25 145)',
-  5: 'oklch(55% 0.25 25)',
-  6: 'oklch(55% 0.25 265)',
-  7: 'oklch(72% 0.20 50)',
-}
+import { useEffect } from 'react'
+import { BOARD_WIDTH, BOARD_HEIGHT, CELL_COLORS } from '../types/tetris'
+import socket from '../lib/socket'
 
 const Board = ({ board, currentPiece }: any) => {
-  if (!board) return <p>Loading board...</p>
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'ArrowLeft':
+          socket.emit('move', { direction: 'left' })
+          break
+        case 'ArrowRight':
+          socket.emit('move', { direction: 'right' })
+          break
+        case 'ArrowDown':
+          socket.emit('move', { direction: 'down' })
+          break
+        case 'ArrowUp':
+          socket.emit('rotate')
+          break
+        case ' ':
+          socket.emit('drop')
+          break
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   const display: number[][] = board.map((row: number[]) => [...row])
 
@@ -30,12 +44,18 @@ const Board = ({ board, currentPiece }: any) => {
   }
 
   return (
-    <div className="w-max grid grid-cols-10 border-2 border-cyan-400 shadow-cyan-400 shadow">
+    <div
+      className="w-max grid grid-cols-10 border-2 border-cyan-400"
+      style={{ boxShadow: '0 0 24px oklch(78% 0.17 192 / 0.5)' }}
+    >
       {display.flat().map((cell, i: number) => (
         <div
           key={i}
-          className="w-8 h-8 border border-gray-800 box-border"
-          style={{ backgroundColor: cell ? CELL_COLORS[cell] : 'oklch(17% 0.04 240)' }}
+          className="w-8 h-8 box-border border border-gray-600/30"
+          style={{
+            backgroundColor: cell ? CELL_COLORS[cell] : 'oklch(17% 0.04 240)',
+            boxShadow: cell ? `inset 0 0 6px oklch(100% 0 0 / 0.2)` : undefined,
+          }}
         />
       ))}
     </div>

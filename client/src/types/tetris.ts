@@ -57,3 +57,14 @@ export type GameState = {
 
 export const BOARD_WIDTH = 10
 export const BOARD_HEIGHT = 20
+
+export const CELL_COLORS: Record<number, string> = {
+  0: 'oklch(17% 0.04 240)',
+  1: 'oklch(78% 0.17 192)',
+  2: 'oklch(95% 0.20 105)',
+  3: 'oklch(65% 0.28 328)',
+  4: 'oklch(72% 0.25 145)',
+  5: 'oklch(55% 0.25 25)',
+  6: 'oklch(55% 0.25 265)',
+  7: 'oklch(72% 0.20 50)',
+}

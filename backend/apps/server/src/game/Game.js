@@ -51,9 +51,9 @@ class Game {
    * @returns {Player}
    */
   addPlayer(socketId, name) {
+    if (this.players.has(socketId)) return this.players.get(socketId)
     const player = new Player(socketId, name)
     if (this.players.size === 0) player.isHost = true
-    console.log('combien de joueur dans la room', this.players.size === 0)
     this.players.set(socketId, player)
     return player
   }

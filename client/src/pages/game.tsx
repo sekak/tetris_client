@@ -22,9 +22,13 @@ const Game = () => {
       {state.gameStarted ? (
         <>
           {/* header */}
-          <div className="flex items-center gap-4 mb-10">
-            <span>ROOM {roomId}</span>
-            <span>Player: {playerName}</span>
+          <div className="flex items-center gap-6 mb-10">
+            <span className="text-xs tracking-widest text-gray-400">
+              ROOM <span className="text-cyan-400 font-bold">{roomId}</span>
+            </span>
+            <span className="text-xs text-gray-400">
+              Player: <span className="text-white font-semibold">{playerName}</span>
+            </span>
           </div>
 
           <div className="flex items-start gap-10">
@@ -40,7 +44,7 @@ const Game = () => {
             </div>
             {/* side panel */}
             <div>
-              <NextPiece piece={state.nextPiece} />
+              {state.nextPiece && <NextPiece piece={state.nextPiece} />}
               <GameInfo score={state.score} level={state.level} linesCleared={state.linesCleared} />
               {state.gameOver && (
                 <div>
