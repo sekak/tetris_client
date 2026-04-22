@@ -110,6 +110,19 @@ function setupGameHandlers(io, socket, rooms) {
     })
   })
 
+  // check is room id valid or not
+  socket.on('check_room', ({ roomId } = {}) => {
+    if (!roomId) {
+      socket.emit('check_room', { exists: false, error: 'roomId is required' })
+      return
+    }
+    const exists = rooms.has(String(roomId).slice(0, 64))
+    socket.emit('check_room', {
+      exists,
+      error: exists ? null : 'Room not found',
+    })
+  })
+
   // ─── disconnect ───────────────────────────────────────────────────────────
   socket.on('disconnect', () => {
     console.log(`Client disconnected: ${socket.id}`)

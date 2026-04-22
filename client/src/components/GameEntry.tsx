@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import socket from '../lib/socket'
 import Button from './ui/button'
 import Input from './ui/input'
 import HowToPlay from './HowToPlay'
@@ -11,6 +12,8 @@ const GameEntry = () => {
   const [mode, setMode] = useState<'' | 'create' | 'join'>('')
   const [pseudo, setPseudo] = useState<string>('')
   const [gameCode, setGameCode] = useState<string>('')
+  const [joinError, setJoinError] = useState<string | null>(null)
+  const [checking, setChecking] = useState(false)
 
   const handleCreation = () => {
     setMode('create')
@@ -24,7 +27,19 @@ const GameEntry = () => {
 
   const handleJoin = () => {
     if (!pseudo.trim() || !gameCode.trim()) return
-    navigate(`/${gameCode.trim().toUpperCase()}/${pseudo.trim()}`)
+    const roomId = gameCode.trim().toUpperCase()
+    const playerName = pseudo.trim()
+    setJoinError(null)
+    setChecking(true)
+    socket.once('check_room', ({ exists, error }: { exists: boolean; error: string | null }) => {
+      setChecking(false)
+      if (exists) {
+        navigate(`/${roomId}/${playerName}`)
+      } else {
+        setJoinError(error ?? 'Room introuvable')
+      }
+    })
+    socket.emit('check_room', { roomId })
   }
 
   return (
@@ -58,6 +73,10 @@ const GameEntry = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         />
+      )}
+
+      {mode === 'join' && joinError && (
+        <p className="text-red-400 text-[10px] text-center">{joinError}</p>
       )}
 
       {mode === '' && (
@@ -94,12 +113,19 @@ const GameEntry = () => {
       {mode === 'join' && (
         <div className="flex flex-col gap-2">
           <Button
-            text="REJOINDRE"
+            text={checking ? '...' : 'REJOINDRE'}
             onClick={handleJoin}
             variant="accent"
-            disabled={!gameCode.trim() || !pseudo.trim()}
+            disabled={!gameCode.trim() || !pseudo.trim() || checking}
           />
-          <Button text="← RETOUR" onClick={() => setMode('')} variant="ghost" />
+          <Button
+            text="← RETOUR"
+            onClick={() => {
+              setMode('')
+              setJoinError(null)
+            }}
+            variant="ghost"
+          />
         </div>
       )}
 

@@ -34,4 +34,8 @@ export const addSocketListener = (dispatch: Dispatch) => {
     // console.log(data)
     dispatch({ type: 'GAME_STATE_UPDATE', payload: data })
   })
+
+  socket.on('check_room', (data) => {
+    dispatch({ type: 'CHECK_ROOM_RESULT', payload: data })
+  })
 }

@@ -15,8 +15,6 @@ const Game = () => {
     socket.emit('start_game')
   }
 
-  console.log(state)
-
   return (
     <div className="h-screen flex flex-col items-center justify-center w-full bg-img">
       {state.gameStarted ? (

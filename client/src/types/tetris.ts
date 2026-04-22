@@ -67,4 +67,5 @@ export const CELL_COLORS: Record<number, string> = {
   5: 'oklch(55% 0.25 25)',
   6: 'oklch(55% 0.25 265)',
   7: 'oklch(72% 0.20 50)',
+  8: 'oklch(45% 0.03 240)',
 }
