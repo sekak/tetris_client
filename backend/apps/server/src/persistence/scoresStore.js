@@ -60,7 +60,7 @@ function createScoresStore({ filePath = process.env.SCORES_FILE || DEFAULT_FILE 
           score: Math.floor(e.score),
           level: Math.floor(e.level ?? 0),
           linesCleared: Math.floor(e.linesCleared ?? 0),
-          isWinner: !!e.isWinner,
+          // isWinner: !!e.isWinner,
           finishedAt: e.finishedAt || new Date().toISOString(),
         }))
 

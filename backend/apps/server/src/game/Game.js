@@ -142,6 +142,7 @@ class Game {
    * @param {Player|null} winner
    */
   endGame(winner) {
+    if (this.status === 'finished') return
     this.stop()
     this.status = 'finished'
     this.io.to(this.roomId).emit('game_over', {
@@ -156,7 +157,7 @@ class Game {
         score: p.score,
         level: p.level,
         linesCleared: p.linesCleared,
-        isWinner: !!(winner && winner.socketId === p.socketId),
+        // isWinner: !!(winner && winner.socketId === p.socketId),
         finishedAt,
       }))
       const updated = this.scoresStore.addScores(this.roomId, entries)
@@ -322,6 +323,7 @@ class Game {
   }
 
   _eliminatePlayer(player) {
+    if (this.status !== 'playing') return
     player.alive = false
     this.io.to(this.roomId).emit('player_game_over', {
       socketId: player.socketId,

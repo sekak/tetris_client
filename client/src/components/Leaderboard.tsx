@@ -5,7 +5,7 @@ type ScoreEntry = {
   score: number
   level: number
   linesCleared: number
-  isWinner: boolean
+  // isWinner: boolean
   finishedAt: string
 }
 
@@ -45,7 +45,7 @@ const Leaderboard = ({
                 <span className="flex items-center gap-2 min-w-0">
                   <span className="text-muted w-4 shrink-0">{i + 1}.</span>
                   <span className="truncate">{entry.name}</span>
-                  {entry.isWinner && <span className="text-accent">👑</span>}
+                  {i === 0 && <span className="text-accent">👑</span>}
                 </span>
                 <span className="flex items-center gap-3 shrink-0">
                   <span className="text-accent">{entry.score}</span>
