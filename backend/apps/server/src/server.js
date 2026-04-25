@@ -5,6 +5,7 @@ const http = require('http')
 const { Server } = require('socket.io')
 const cors = require('cors')
 const setupGameHandlers = require('./sockets/gameHandler')
+const { createScoresStore } = require('./persistence/scoresStore')
 
 const PORT = process.env.PORT || 4000
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173'
@@ -28,10 +29,11 @@ const io = new Server(httpServer, {
 
 // Shared room registry: roomId → Game
 const rooms = new Map()
+const scoresStore = createScoresStore()
 
 io.on('connection', (socket) => {
   console.log(`Client connected: ${socket.id}`)
-  setupGameHandlers(io, socket, rooms)
+  setupGameHandlers(io, socket, rooms, scoresStore)
 })
 
 // ─── Start ────────────────────────────────────────────────────────────────────

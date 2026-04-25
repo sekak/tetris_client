@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion'
+import Leaderboard from './Leaderboard'
 
 const GameOver = ({ state }: { state: any }) => {
   const isWinner = state.winner ? state.socketId === state.winner.socketId : false
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center gap-3 bg-card border border-border p-6 my-3"
+      className="flex flex-col items-center justify-center gap-4 bg-card border border-border p-6 my-3"
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -31,6 +32,12 @@ const GameOver = ({ state }: { state: any }) => {
           GAGNANT : <span className="text-accent">{state.winner.name}</span>
         </motion.p>
       )}
+
+      <Leaderboard
+        scores={state.roomScores || []}
+        currentPlayerName={state.playerName}
+        title="TOP SCORES — ROOM"
+      />
     </motion.div>
   )
 }

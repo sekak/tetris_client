@@ -28,10 +28,12 @@ class Game {
   /**
    * @param {string} roomId
    * @param {import('socket.io').Server} io
+   * @param {{ addScores: Function, getScores: Function }} [scoresStore]
    */
-  constructor(roomId, io) {
+  constructor(roomId, io, scoresStore = null) {
     this.roomId = roomId
     this.io = io
+    this.scoresStore = scoresStore
 
     /** @type {Map<string, Player>} */
     this.players = new Map()
@@ -146,6 +148,20 @@ class Game {
       winner: winner ? winner.toJSON() : null,
       players: [...this.players.values()].map((p) => p.toJSON()),
     })
+
+    if (this.scoresStore) {
+      const finishedAt = new Date().toISOString()
+      const entries = [...this.players.values()].map((p) => ({
+        name: p.name,
+        score: p.score,
+        level: p.level,
+        linesCleared: p.linesCleared,
+        isWinner: !!(winner && winner.socketId === p.socketId),
+        finishedAt,
+      }))
+      const updated = this.scoresStore.addScores(this.roomId, entries)
+      this.io.to(this.roomId).emit('room_scores', { roomId: this.roomId, scores: updated })
+    }
   }
 
   // ─── Input handlers ─────────────────────────────────────────────────────────

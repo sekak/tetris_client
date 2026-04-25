@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import Button from './ui/button'
 import socket from '../lib/socket'
 import Copier from './ui/copierLink'
+import Leaderboard from './Leaderboard'
 
 const MAX_PLAYERS = 4
 
@@ -19,6 +20,7 @@ const Lobby = ({ state, roomId, playerName, LancerPartie }: LobbyProps) => {
 
   useEffect(() => {
     socket.emit('join_room', { roomId, playerName })
+    socket.emit('get_scores', { roomId })
   }, [])
 
   return (
@@ -85,6 +87,12 @@ const Lobby = ({ state, roomId, playerName, LancerPartie }: LobbyProps) => {
 
         <Button text="← RETOUR" onClick={() => window.history.back()} variant="ghost" />
       </motion.div>
+
+      <Leaderboard
+        scores={state.roomScores || []}
+        currentPlayerName={playerName}
+        title="HISTORIQUE DE LA ROOM"
+      />
     </main>
   )
 }

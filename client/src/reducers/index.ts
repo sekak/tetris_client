@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   winner: null,
   error: null,
   exists: false,
+  roomScores: [],
 }
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -96,6 +97,12 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         ...state,
         gameOver: true,
         winner: action.payload.winner,
+      }
+
+    case 'ROOM_SCORES':
+      return {
+        ...state,
+        roomScores: Array.isArray(action.payload?.scores) ? action.payload.scores : [],
       }
 
     case 'GAME_RESET':

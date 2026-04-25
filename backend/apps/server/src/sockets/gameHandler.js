@@ -9,7 +9,7 @@ const { Game } = require('../game/Game')
  * @param {import('socket.io').Socket} socket - the individual client socket
  * @param {Map<string, Game>} rooms          - shared room registry
  */
-function setupGameHandlers(io, socket, rooms) {
+function setupGameHandlers(io, socket, rooms, scoresStore = null) {
   // ─── Helper: get the game the socket currently belongs to ─────────────────
   const currentGame = () => rooms.get(socket.gameRoomId)
 
@@ -27,7 +27,7 @@ function setupGameHandlers(io, socket, rooms) {
 
     // Create room on first join
     if (!rooms.has(safeRoomId)) {
-      rooms.set(safeRoomId, new Game(safeRoomId, io))
+      rooms.set(safeRoomId, new Game(safeRoomId, io, scoresStore))
     }
 
     const game = rooms.get(safeRoomId)
@@ -107,6 +107,20 @@ function setupGameHandlers(io, socket, rooms) {
     game.reset()
     io.to(socket.gameRoomId).emit('game_reset', {
       players: [...game.players.values()].map((p) => p.toJSON()),
+    })
+  })
+
+  // ─── get_scores ───────────────────────────────────────────────────────────
+  // Payload: { roomId }
+  socket.on('get_scores', ({ roomId } = {}) => {
+    if (!roomId || !scoresStore) {
+      socket.emit('room_scores', { roomId: roomId || null, scores: [] })
+      return
+    }
+    const safeRoomId = String(roomId).slice(0, 64)
+    socket.emit('room_scores', {
+      roomId: safeRoomId,
+      scores: scoresStore.getScores(safeRoomId),
     })
   })
 
