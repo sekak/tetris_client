@@ -2,8 +2,6 @@ import { CELL_COLORS } from '../types/tetris'
 
 const NextPiece = ({ piece }: { piece: any }) => {
   const cols = piece?.shape?.length
-  const rows = piece?.shape[0]?.length
-  console.log(cols, rows)
 
   return (
     <div className="flex flex-col">

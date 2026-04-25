@@ -31,11 +31,22 @@ export const addSocketListener = (dispatch: Dispatch) => {
   })
 
   socket.on('game_state', (data) => {
-    // console.log(data)
     dispatch({ type: 'GAME_STATE_UPDATE', payload: data })
   })
 
   socket.on('check_room', (data) => {
     dispatch({ type: 'CHECK_ROOM_RESULT', payload: data })
+  })
+
+  socket.on('game_reset', (data) => {
+    dispatch({ type: 'GAME_RESET', payload: data })
+  })
+
+  socket.on('game_over', (data) => {
+    dispatch({ type: 'GAME_OVER', payload: data })
+  })
+
+  socket.on('disconnect', (data) => {
+    dispatch({ type: 'PLAYER_LEFT', payload: data })
   })
 }
