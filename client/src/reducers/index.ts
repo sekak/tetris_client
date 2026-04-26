@@ -82,6 +82,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
       if (!me) return state
       return {
         ...state,
+        players,
         grid: me.grid,
         currentPiece: me.currentPiece,
         nextPiece: me.nextPiece,
@@ -89,6 +90,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         level: me.level,
         linesCleared: me.linesCleared,
         spectrum: me.spectrum,
+        alive: me.alive,
       }
     }
 

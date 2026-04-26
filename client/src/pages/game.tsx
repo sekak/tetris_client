@@ -7,6 +7,7 @@ import GameOver from '../components/GameOver'
 import Lobby from '../components/lobby'
 import TetrisBoard from '../components/TetrisBoard'
 import Button from '../components/ui/button'
+import Opponents from '../components/Opponents'
 
 const Game = () => {
   const state = useSelector((state: any) => state)
@@ -27,7 +28,7 @@ const Game = () => {
         <>
           <div className="flex items-start gap-10">
             {/* opponents */}
-            <span>opponents</span>
+            <Opponents players={state.players} mySocketId={state.socketId} />
             {/* Main board */}
             <div className="flex flex-col gap-3">
               {/* header */}
