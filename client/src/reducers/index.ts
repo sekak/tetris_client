@@ -96,7 +96,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
       return {
         ...state,
         gameOver: true,
-        winner: action.payload.winner,
+        winner: action.payload.winner ?? state.winner,
       }
 
     case 'ROOM_SCORES':

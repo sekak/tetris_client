@@ -323,7 +323,6 @@ class Game {
   }
 
   _eliminatePlayer(player) {
-    if (this.status !== 'playing') return
     player.alive = false
     this.io.to(this.roomId).emit('player_game_over', {
       socketId: player.socketId,
