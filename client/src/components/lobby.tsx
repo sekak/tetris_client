@@ -15,6 +15,7 @@ type LobbyProps = {
 }
 
 const Lobby = ({ state, roomId, playerName, LancerPartie }: LobbyProps) => {
+  const mode: 'normal' | 'fast' = state.mode ?? 'normal'
   const joueurs = state.players
   const roomUrl = window.location.href
 
@@ -22,6 +23,11 @@ const Lobby = ({ state, roomId, playerName, LancerPartie }: LobbyProps) => {
     socket.emit('join_room', { roomId, playerName })
     socket.emit('get_scores', { roomId })
   }, [])
+
+  const handleSetMode = (next: 'normal' | 'fast') => {
+    if (!state.isHost || next === mode) return
+    socket.emit('set_mode', { mode: next })
+  }
 
   return (
     <main className="flex flex-col items-center gap-8 py-10">
@@ -84,6 +90,21 @@ const Lobby = ({ state, roomId, playerName, LancerPartie }: LobbyProps) => {
         {state.isHost && (
           <Button text="LANCER LA PARTIE" onClick={LancerPartie} variant="accent" isAnimate />
         )}
+
+        <div className="flex gap-3 items-center w-full">
+          <Button
+            text="NORMAL"
+            variant={mode === 'normal' ? 'accent' : 'ghost'}
+            onClick={() => handleSetMode('normal')}
+            disabled={!state.isHost}
+          />
+          <Button
+            text="RAPIDE"
+            variant={mode === 'fast' ? 'accent' : 'ghost'}
+            onClick={() => handleSetMode('fast')}
+            disabled={!state.isHost}
+          />
+        </div>
 
         <Button text="← RETOUR" onClick={() => window.history.back()} variant="ghost" />
       </motion.div>

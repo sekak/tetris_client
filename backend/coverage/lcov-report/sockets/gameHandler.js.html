@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.2% </span>
+                <span class="strong">75.7% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>80/101</span>
+                <span class='fraction'>81/107</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.76% </span>
+                <span class="strong">65.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>46/65</span>
+                <span class='fraction'>46/70</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.35% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/17</span>
+                <span class='fraction'>14/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.4% </span>
+                <span class="strong">75.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>69/88</span>
+                <span class='fraction'>70/93</span>
             </div>
         
             
@@ -252,7 +252,20 @@
 <a name='L187'></a><a href='#L187'>187</a>
 <a name='L188'></a><a href='#L188'>188</a>
 <a name='L189'></a><a href='#L189'>189</a>
-<a name='L190'></a><a href='#L190'>190</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -301,6 +314,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -322,6 +336,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,6 +353,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -489,6 +515,7 @@ function setupGameHandlers(io, socket, rooms, scoresStore = null) {
         roomId: safeRoomId,
         player: existing.toJSON(),
         players: [...game.players.values()].map(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; <span class="cstat-no" title="statement not covered" >p.toJSON())</span>,
+        mode: game.mode,
       })
 <span class="cstat-no" title="statement not covered" >      return</span>
     }
@@ -508,6 +535,7 @@ function setupGameHandlers(io, socket, rooms, scoresStore = null) {
       roomId: safeRoomId,
       player: player.toJSON(),
       players: [...game.players.values()].map((p) =&gt; p.toJSON()),
+      mode: game.mode,
     })
 &nbsp;
     // Notify others in the room
@@ -528,6 +556,17 @@ function setupGameHandlers(io, socket, rooms, scoresStore = null) {
     io.to(socket.gameRoomId).emit('game_started', {
       players: [...game.players.values()].map((p) =&gt; p.toJSON()),
     })
+  })
+&nbsp;
+  // ─── set_mode ─────────────────────────────────────────────────────────────
+  // Only the host may change the game mode, and only while waiting.
+  // Payload: { mode: 'normal'|'fast' }
+  socket.on('set_mode', <span class="fstat-no" title="function not covered" >({</span> mode } = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> =&gt; {
+    const game = <span class="cstat-no" title="statement not covered" >currentGame()</span>
+<span class="cstat-no" title="statement not covered" >    if (!game) <span class="cstat-no" title="statement not covered" >return</span></span>
+<span class="cstat-no" title="statement not covered" >    if (!game.setMode(socket.id, mode)) {</span>
+<span class="cstat-no" title="statement not covered" >      socket.emit('error', { message: 'Cannot set mode' })</span>
+    }
   })
 &nbsp;
   // ─── move ─────────────────────────────────────────────────────────────────
@@ -637,7 +676,7 @@ module.exports = setupGameHandlers
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-29T12:23:00.092Z
+                at 2026-04-29T13:23:31.905Z
             </div>
         <script src="../prettify.js"></script>
         <script>

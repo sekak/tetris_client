@@ -46,6 +46,7 @@ function setupGameHandlers(io, socket, rooms, scoresStore = null) {
         roomId: safeRoomId,
         player: existing.toJSON(),
         players: [...game.players.values()].map((p) => p.toJSON()),
+        mode: game.mode,
       })
       return
     }
@@ -65,6 +66,7 @@ function setupGameHandlers(io, socket, rooms, scoresStore = null) {
       roomId: safeRoomId,
       player: player.toJSON(),
       players: [...game.players.values()].map((p) => p.toJSON()),
+      mode: game.mode,
     })
 
     // Notify others in the room
@@ -85,6 +87,17 @@ function setupGameHandlers(io, socket, rooms, scoresStore = null) {
     io.to(socket.gameRoomId).emit('game_started', {
       players: [...game.players.values()].map((p) => p.toJSON()),
     })
+  })
+
+  // ─── set_mode ─────────────────────────────────────────────────────────────
+  // Only the host may change the game mode, and only while waiting.
+  // Payload: { mode: 'normal'|'fast' }
+  socket.on('set_mode', ({ mode } = {}) => {
+    const game = currentGame()
+    if (!game) return
+    if (!game.setMode(socket.id, mode)) {
+      socket.emit('error', { message: 'Cannot set mode' })
+    }
   })
 
   // ─── move ─────────────────────────────────────────────────────────────────

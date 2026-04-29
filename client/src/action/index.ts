@@ -57,6 +57,10 @@ export const addSocketListener = (dispatch: Dispatch) => {
     dispatch({ type: 'ROOM_SCORES', payload: data })
   })
 
+  socket.on('mode_changed', (data) => {
+    dispatch({ type: 'MODE_CHANGED', payload: data })
+  })
+
   socket.on('disconnect', (data) => {
     dispatch({ type: 'PLAYER_LEFT', payload: data })
   })

@@ -40,6 +40,8 @@ class Game {
     this.pieceSequence = []
     /** @type {'waiting'|'playing'|'finished'} */
     this.status = 'waiting'
+    /** @type {'normal'|'fast'} */
+    this.mode = 'normal'
     this._tickInterval = null
     this._seed = null
   }
@@ -110,7 +112,7 @@ class Game {
       player.alive = true
       player.spawnPiece(this.pieceSequence)
     }
-
+    
     this._tickInterval = setInterval(() => this._tick(), TICK_RATE)
     return true
   }
@@ -149,8 +151,6 @@ class Game {
       winner: winner ? winner.toJSON() : null,
       players: [...this.players.values()].map((p) => p.toJSON()),
     })
-
-    console.log("ow much")
 
     if (this.scoresStore) {
       const finishedAt = new Date().toISOString()
@@ -221,8 +221,26 @@ class Game {
     return {
       roomId: this.roomId,
       status: this.status,
+      mode: this.mode,
       players: [...this.players.values()].map((p) => p.toJSON()),
     }
+  }
+
+  /**
+   * Sets the game mode. Only the host may change it, and only while waiting.
+   * @param {string} socketId
+   * @param {'normal'|'fast'} mode
+   * @returns {boolean}  true if mode was applied
+   */
+  setMode(socketId, mode) {
+    if (this.status !== 'waiting') return false
+    if (mode !== 'normal' && mode !== 'fast') return false
+    const player = this.players.get(socketId)
+    if (!player || !player.isHost) return false
+    if (this.mode === mode) return true
+    this.mode = mode
+    this.io.to(this.roomId).emit('mode_changed', { roomId: this.roomId, mode })
+    return true
   }
 
   // ─── Private helpers ────────────────────────────────────────────────────────
@@ -251,7 +269,7 @@ class Game {
     for (const player of this.players.values()) {
       if (!player.alive) continue
       player.gravityTimer += TICK_RATE
-      if (player.gravityTimer >= calculateGravityDelay(player.level)) {
+      if (player.gravityTimer >= calculateGravityDelay(player.level, this.mode)) {
         player.gravityTimer = 0
         this._applyGravity(player)
       }

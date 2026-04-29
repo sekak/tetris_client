@@ -218,11 +218,14 @@ function calculateLevel(totalLines) {
 /**
  * Returns the gravity delay (ms between automatic drops) for a given level.
  * @param {number} level
+ * @param {'normal'|'fast'} [mode='normal']
  * @returns {number}
  */
-function calculateGravityDelay(level) {
-  const delays = [800, 720, 630, 550, 470, 380, 300, 215, 130, 100, 80]
-  return delays[Math.min(level, delays.length - 1)]
+function calculateGravityDelay(level, mode = 'normal') {
+  const normalDelays = [800, 720, 630, 550, 470, 380, 300, 215, 130, 100, 80]
+  const fastDelays   = [255, 230, 210, 185, 155, 130, 110, 85,  55,  30,  10]
+  const table = mode === 'fast' ? fastDelays : normalDelays
+  return table[Math.min(level, table.length - 1)]
 }
 
 module.exports = {

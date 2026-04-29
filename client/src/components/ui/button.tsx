@@ -32,7 +32,7 @@ const Button = ({
         ? 'border border-secondary text-secondary hover:bg-secondary/20'
         : variant === 'accent'
           ? 'bg-accent text-gray-800 hover:bg-accent/80 box-shadow-yellow'
-          : 'bg-transparent text-muted hover:text-accent cursor-pointer'
+          : 'bg-transparent text-muted hover:text-accent cursor-pointer border border-border hover:border-accent'
 
   const disabledClasses = disabled ? 'opacity-60 !cursor-not-allowed' : ''
   const className = `${baseClasses} ${variantClasses} ${disabledClasses}`

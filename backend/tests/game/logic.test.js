@@ -468,15 +468,38 @@ describe('calculateLevel', () => {
 
 // ─── calculateGravityDelay ────────────────────────────────────────────────────
 describe('calculateGravityDelay', () => {
-  test('level 0 returns 800ms', () => {
-    expect(calculateGravityDelay(0)).toBe(800)
+  test('level 0 returns 800ms in normal mode', () => {
+    expect(calculateGravityDelay(0, 'normal')).toBe(800)
+  })
+
+  test('defaults to normal mode when omitted', () => {
+    expect(calculateGravityDelay(5)).toBe(380)
   })
 
   test('higher levels return shorter delays', () => {
-    expect(calculateGravityDelay(5)).toBeLessThan(calculateGravityDelay(0))
+    expect(calculateGravityDelay(5, 'normal')).toBeLessThan(calculateGravityDelay(0, 'normal'))
   })
 
-  test('level beyond table max returns minimum delay', () => {
-    expect(calculateGravityDelay(100)).toBe(calculateGravityDelay(10))
+  test('level beyond table max returns minimum delay (normal)', () => {
+    expect(calculateGravityDelay(100, 'normal')).toBe(calculateGravityDelay(10, 'normal'))
+  })
+
+  test('fast mode at level 0 is faster than normal', () => {
+    expect(calculateGravityDelay(0, 'fast')).toBeLessThan(calculateGravityDelay(0, 'normal'))
+    expect(calculateGravityDelay(0, 'fast')).toBe(400)
+  })
+
+  test('fast mode level 10 returns 40ms', () => {
+    expect(calculateGravityDelay(10, 'fast')).toBe(40)
+  })
+
+  test('fast mode clamps levels beyond table max', () => {
+    expect(calculateGravityDelay(99, 'fast')).toBe(calculateGravityDelay(10, 'fast'))
+  })
+
+  test('fast mode is faster than normal at every level', () => {
+    for (let lvl = 0; lvl <= 10; lvl++) {
+      expect(calculateGravityDelay(lvl, 'fast')).toBeLessThan(calculateGravityDelay(lvl, 'normal'))
+    }
   })
 })

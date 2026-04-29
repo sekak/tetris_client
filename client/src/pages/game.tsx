@@ -14,7 +14,6 @@ const Game = () => {
   const { roomId, playerName } = useParams<{ roomId: string; playerName: string }>()
 
   const handleRelancer = () => {
-    console.log('hna rejouer')
     socket.emit('restart_game')
   }
 

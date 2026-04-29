@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Coverage backend output
+coverage
+
+# data backend output
+data
+

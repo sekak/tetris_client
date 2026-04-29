@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82% </span>
+                <span class="strong">75.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>123/150</span>
+                <span class='fraction'>123/162</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.69% </span>
+                <span class="strong">65.26% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>62/83</span>
+                <span class='fraction'>62/95</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>22/25</span>
+                <span class='fraction'>22/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.44% </span>
+                <span class="strong">79.72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>114/135</span>
+                <span class='fraction'>114/143</span>
             </div>
         
             
@@ -425,7 +425,25 @@
 <a name='L360'></a><a href='#L360'>360</a>
 <a name='L361'></a><a href='#L361'>361</a>
 <a name='L362'></a><a href='#L362'>362</a>
-<a name='L363'></a><a href='#L363'>363</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L363'></a><a href='#L363'>363</a>
+<a name='L364'></a><a href='#L364'>364</a>
+<a name='L365'></a><a href='#L365'>365</a>
+<a name='L366'></a><a href='#L366'>366</a>
+<a name='L367'></a><a href='#L367'>367</a>
+<a name='L368'></a><a href='#L368'>368</a>
+<a name='L369'></a><a href='#L369'>369</a>
+<a name='L370'></a><a href='#L370'>370</a>
+<a name='L371'></a><a href='#L371'>371</a>
+<a name='L372'></a><a href='#L372'>372</a>
+<a name='L373'></a><a href='#L373'>373</a>
+<a name='L374'></a><a href='#L374'>374</a>
+<a name='L375'></a><a href='#L375'>375</a>
+<a name='L376'></a><a href='#L376'>376</a>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -464,6 +482,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">49x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">49x</span>
@@ -578,8 +598,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -648,8 +666,26 @@
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -829,6 +865,8 @@ class Game {
     this.pieceSequence = []
     /** @type {'waiting'|'playing'|'finished'} */
     this.status = 'waiting'
+    /** @type {'normal'|'fast'} */
+    this.mode = 'normal'
     this._tickInterval = null
     this._seed = null
   }
@@ -899,7 +937,7 @@ class Game {
       player.alive = true
       player.spawnPiece(this.pieceSequence)
     }
-&nbsp;
+    
     this._tickInterval = setInterval(() =&gt; this._tick(), TICK_RATE)
     return true
   }
@@ -938,8 +976,6 @@ class Game {
       winner: winner ? winner.toJSON() : null,
       players: [...this.players.values()].map((p) =&gt; p.toJSON()),
     })
-&nbsp;
-    console.log("ow much")
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (this.scoresStore) {
       const finishedAt = <span class="cstat-no" title="statement not covered" >new Date().toISOString()</span>
@@ -1010,8 +1046,26 @@ class Game {
     return {
       roomId: this.roomId,
       status: this.status,
+      mode: this.mode,
       players: [...this.players.values()].map((p) =&gt; p.toJSON()),
     }
+  }
+&nbsp;
+  /**
+   * Sets the game mode. Only the host may change it, and only while waiting.
+   * @param {string} socketId
+   * @param {'normal'|'fast'} mode
+   * @returns {boolean}  true if mode was applied
+   */
+<span class="fstat-no" title="function not covered" >  se</span>tMode(socketId, mode) {
+<span class="cstat-no" title="statement not covered" >    if (this.status !== 'waiting') <span class="cstat-no" title="statement not covered" >return false</span></span>
+<span class="cstat-no" title="statement not covered" >    if (mode !== 'normal' &amp;&amp; mode !== 'fast') <span class="cstat-no" title="statement not covered" >return false</span></span>
+    const player = <span class="cstat-no" title="statement not covered" >this.players.get(socketId)</span>
+<span class="cstat-no" title="statement not covered" >    if (!player || !player.isHost) <span class="cstat-no" title="statement not covered" >return false</span></span>
+<span class="cstat-no" title="statement not covered" >    if (this.mode === mode) <span class="cstat-no" title="statement not covered" >return true</span></span>
+<span class="cstat-no" title="statement not covered" >    this.mode = mode</span>
+<span class="cstat-no" title="statement not covered" >    this.io.to(this.roomId).emit('mode_changed', { roomId: this.roomId, mode })</span>
+<span class="cstat-no" title="statement not covered" >    return true</span>
   }
 &nbsp;
   // ─── Private helpers ────────────────────────────────────────────────────────
@@ -1040,7 +1094,7 @@ class Game {
     for (const player of this.players.values()) {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (!player.alive) <span class="cstat-no" title="statement not covered" >continue</span>
       player.gravityTimer += TICK_RATE
-      if (player.gravityTimer &gt;= calculateGravityDelay(player.level)) {
+      if (player.gravityTimer &gt;= calculateGravityDelay(player.level, this.mode)) {
         player.gravityTimer = 0
         this._applyGravity(player)
       }
@@ -1156,7 +1210,7 @@ module.exports = { Game, TICK_RATE }
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-29T12:23:00.092Z
+                at 2026-04-29T13:23:31.905Z
             </div>
         <script src="../prettify.js"></script>
         <script>

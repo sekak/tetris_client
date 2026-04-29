@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   error: null,
   exists: false,
   roomScores: [],
+  mode: 'normal' as 'normal' | 'fast',
 }
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -31,7 +32,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
       return { ...state, connected: false, socketId: null }
 
     case 'ROOM_JOINED': {
-      const { roomId, player, players } = action.payload
+      const { roomId, player, players, mode } = action.payload
 
       return {
         ...state,
@@ -41,9 +42,14 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         isHost: player.isHost,
         grid: player.grid,
         players,
+        mode: mode ?? state.mode,
         error: null,
       }
     }
+
+    case 'MODE_CHANGED':
+      return { ...state, mode: action.payload.mode }
+
     case 'PLAYER_JOINED': {
       const { player } = action.payload
       if (state.players.some((p: Player) => p.socketId === player.socketId)) return state
