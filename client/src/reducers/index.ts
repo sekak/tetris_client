@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   roomId: null,
   gameStarted: false,
   gameOver: false,
-  winner: null,
+  winner: [],
   error: null,
   exists: false,
   roomScores: [],
@@ -32,6 +32,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
     case 'ROOM_JOINED': {
       const { roomId, player, players } = action.payload
+
       return {
         ...state,
         socketId: player.socketId,
@@ -94,12 +95,15 @@ const reducer = (state = INITIAL_STATE, action: any) => {
       }
     }
 
-    case 'GAME_OVER':
+    case 'GAME_OVER': {
+      const { winner } = action.payload
+
       return {
         ...state,
         gameOver: true,
-        winner: action.payload.winner ?? state.winner,
+        winner: winner ? { name: winner.name, socketId: winner.socketId } : null,
       }
+    }
 
     case 'ROOM_SCORES':
       return {

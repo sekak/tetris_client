@@ -1,7 +1,12 @@
 import type { Dispatch } from 'redux'
 import socket from '../lib/socket'
 
+let registered = false
+
 export const addSocketListener = (dispatch: Dispatch) => {
+  if (registered) return
+  registered = true
+
   socket.on('connect', () => {
     dispatch({ type: 'SOCKET_CONNECTED', payload: { socketId: socket.id } })
   })
@@ -31,6 +36,7 @@ export const addSocketListener = (dispatch: Dispatch) => {
   })
 
   socket.on('game_state', (data) => {
+    console.log('game state', data)
     dispatch({ type: 'GAME_STATE_UPDATE', payload: data })
   })
 
@@ -43,6 +49,7 @@ export const addSocketListener = (dispatch: Dispatch) => {
   })
 
   socket.on('game_over', (data) => {
+    console.log('game over', data)
     dispatch({ type: 'GAME_OVER', payload: data })
   })
 

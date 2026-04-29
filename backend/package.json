@@ -1,25 +1,21 @@
 {
-  "name": "red-tetris",
-  "private": true,
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Red Tetris backend server",
+  "main": "src/server.js",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.9.5",
-    "typescript": "5.9.2"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "npm@11.6.2",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
+  }
 }
