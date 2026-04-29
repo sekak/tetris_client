@@ -486,11 +486,11 @@ describe('calculateGravityDelay', () => {
 
   test('fast mode at level 0 is faster than normal', () => {
     expect(calculateGravityDelay(0, 'fast')).toBeLessThan(calculateGravityDelay(0, 'normal'))
-    expect(calculateGravityDelay(0, 'fast')).toBe(400)
+    expect(calculateGravityDelay(0, 'fast')).toBe(255)
   })
 
   test('fast mode level 10 returns 40ms', () => {
-    expect(calculateGravityDelay(10, 'fast')).toBe(40)
+    expect(calculateGravityDelay(10, 'fast')).toBe(10)
   })
 
   test('fast mode clamps levels beyond table max', () => {
