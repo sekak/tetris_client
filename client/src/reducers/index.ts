@@ -1,6 +1,6 @@
-import type { Player } from '../types/tetris'
+import type { GAME_STATE, Player } from '../types/tetris'
 
-const INITIAL_STATE = {
+const INITIAL_STATE: GAME_STATE = {
   alive: false,
   currentPiece: null,
   grid: null,

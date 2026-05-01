@@ -1,19 +1,5 @@
 import { motion } from 'framer-motion'
-
-type ScoreEntry = {
-  name: string
-  score: number
-  level: number
-  linesCleared: number
-  // isWinner: boolean
-  finishedAt: string
-}
-
-type LeaderboardProps = {
-  scores: ScoreEntry[]
-  currentPlayerName?: string | null
-  title?: string
-}
+import type { LeaderboardProps } from '../types/tetris'
 
 const Leaderboard = ({
   scores,

@@ -3,7 +3,7 @@ import Leaderboard from './Leaderboard'
 
 const GameOver = ({ state }: { state: any }) => {
   const isWinner = state.winner ? state.socketId === state.winner.socketId : false
-  console.log(isWinner, state.winner, state.socketId, state.winner.socketId)
+
   return (
     <motion.div
       className="flex flex-col items-center justify-center gap-4 bg-card border border-border p-6 my-3"

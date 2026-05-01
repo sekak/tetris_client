@@ -15,11 +15,12 @@ const HowToPlay = () => {
   return (
     <>
       <motion.button
+        id="btn-1"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         onClick={() => setIsOpen(true)}
-        className="text-muted font-pixel text-xs hover:text-primary transition-colors cursor-pointer"
+        className="btn-1 text-muted font-pixel text-xs hover:text-primary transition-colors cursor-pointer"
       >
         [ COMMENT JOUER ? ]
       </motion.button>
@@ -68,6 +69,7 @@ const HowToPlay = () => {
               </div>
 
               <button
+                id="btn-2"
                 onClick={() => setIsOpen(false)}
                 className="text-muted font-pixel text-xs hover:text-accent transition-colors cursor-pointer text-center"
               >
