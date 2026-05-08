@@ -36,7 +36,6 @@ export const addSocketListener = (dispatch: Dispatch) => {
   })
 
   socket.on('game_state', (data) => {
-    console.log('game state', data)
     dispatch({ type: 'GAME_STATE_UPDATE', payload: data })
   })
 
@@ -49,7 +48,6 @@ export const addSocketListener = (dispatch: Dispatch) => {
   })
 
   socket.on('game_over', (data) => {
-    console.log('game over', data)
     dispatch({ type: 'GAME_OVER', payload: data })
   })
 
