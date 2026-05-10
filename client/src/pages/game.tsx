@@ -1,5 +1,6 @@
-import { useSelector } from 'react-redux'
-import { useParams } from 'react-router'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router'
 import socket from '../lib/socket'
 import NextPiece from '../components/NextPiece'
 import GameInfo from '../components/GameInfo'
@@ -11,7 +12,31 @@ import Opponents from '../components/Opponents'
 
 const Game = () => {
   const state = useSelector((state: any) => state)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { roomId, playerName } = useParams<{ roomId: string; playerName: string }>()
+
+  useEffect(() => {
+    dispatch({ type: 'CLEAR_JOIN_ERROR' })
+  }, [roomId, playerName])
+
+  if (state.joinError) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center w-full bg-img">
+        <div className="bg-card border border-border p-6 rounded-lg flex flex-col items-center gap-4">
+          <p className="text-red-400 text-xs font-pixel text-center max-w-sm">{state.joinError}</p>
+          <Button
+            text="← RETOUR"
+            variant="ghost"
+            onClick={() => {
+              dispatch({ type: 'CLEAR_JOIN_ERROR' })
+              navigate('/')
+            }}
+          />
+        </div>
+      </div>
+    )
+  }
 
   const handleRelancer = () => {
     socket.emit('restart_game')

@@ -17,7 +17,6 @@ type LobbyProps = {
 const Lobby = ({ state, roomId, playerName, LancerPartie }: LobbyProps) => {
   const mode: 'normal' | 'fast' = state.mode ?? 'normal'
   const joueurs = state.players
-  const roomUrl = window.location.href
 
   useEffect(() => {
     socket.emit('join_room', { roomId, playerName })
@@ -84,7 +83,6 @@ const Lobby = ({ state, roomId, playerName, LancerPartie }: LobbyProps) => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.6 }}
       >
-        <Copier text={roomUrl} title="PARTAGE LE LIEN DE LA ROOM" />
         <Copier text={roomId!} title="PARTAGE LE ROOM ID" />
 
         {state.isHost && (

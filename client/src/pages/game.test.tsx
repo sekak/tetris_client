@@ -6,12 +6,15 @@ vi.mock('../lib/socket', () => ({
 }))
 
 const useSelectorMock = vi.fn()
+const useDispatchMock = vi.fn(() => vi.fn())
 vi.mock('react-redux', () => ({
   useSelector: (selector: (state: unknown) => unknown) => useSelectorMock(selector),
+  useDispatch: () => useDispatchMock(),
 }))
 
 vi.mock('react-router', () => ({
   useParams: () => ({ roomId: 'ROOM1', playerName: 'alice' }),
+  useNavigate: () => vi.fn(),
 }))
 
 vi.mock('../components/TetrisBoard', () => ({

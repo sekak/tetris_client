@@ -37,6 +37,7 @@ export type GAME_STATE = {
   gameOver: boolean
   winner: { socketId: string; name: string }[] // peut être plusieurs en cas d'égalité
   error: string | null
+  joinError: string | null
   exists: boolean
   roomScores: { playerName: string; score: number }[]
   mode: 'normal' | 'fast'

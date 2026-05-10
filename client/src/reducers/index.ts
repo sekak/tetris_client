@@ -18,6 +18,7 @@ const INITIAL_STATE: GAME_STATE = {
   gameOver: false,
   winner: [],
   error: null,
+  joinError: null,
   exists: false,
   roomScores: [],
   mode: 'normal' as 'normal' | 'fast',
@@ -44,8 +45,15 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         players,
         mode: mode ?? state.mode,
         error: null,
+        joinError: null,
       }
     }
+
+    case 'JOIN_ERROR':
+      return { ...state, joinError: action.payload.message }
+
+    case 'CLEAR_JOIN_ERROR':
+      return { ...state, joinError: null }
 
     case 'MODE_CHANGED':
       return { ...state, mode: action.payload.mode }

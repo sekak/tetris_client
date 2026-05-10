@@ -32,10 +32,18 @@ function setupGameHandlers(io, socket, rooms, scoresStore = null) {
 
     const game = rooms.get(safeRoomId)
 
-    // Reconnect path: a player with this name already exists → rebind socket id
+    // A player with this name already exists in the room.
     const existing = [...game.players.values()].find((p) => p.name === safeName)
     if (existing) {
-      if (existing.socketId !== socket.id) {
+      const sameSocket = existing.socketId === socket.id
+      const isPostGameReconnect = game.status === 'finished'
+
+      if (!sameSocket && !isPostGameReconnect) {
+        socket.emit('join_error', { message: 'Ce pseudo est déjà pris dans cette room' })
+        return
+      }
+
+      if (!sameSocket) {
         game.players.delete(existing.socketId)
         existing.socketId = socket.id
         game.players.set(socket.id, existing)

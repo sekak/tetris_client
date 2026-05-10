@@ -15,6 +15,10 @@ export const addSocketListener = (dispatch: Dispatch) => {
     console.error('Socket error:', err)
   })
 
+  socket.on('join_error', (err) => {
+    dispatch({ type: 'JOIN_ERROR', payload: { message: err?.message ?? 'Erreur inconnue' } })
+  })
+
   socket.on('room_joined', (data) => {
     dispatch({ type: 'ROOM_JOINED', payload: data })
   })

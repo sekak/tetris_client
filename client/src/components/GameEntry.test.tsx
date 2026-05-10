@@ -6,6 +6,10 @@ vi.mock('react-router', () => ({
   useNavigate: () => navigateMock,
 }))
 
+vi.mock('react-redux', () => ({
+  useDispatch: () => vi.fn(),
+}))
+
 vi.mock('../lib/socket', () => ({
   default: { emit: vi.fn(), once: vi.fn(), on: vi.fn(), off: vi.fn() },
 }))

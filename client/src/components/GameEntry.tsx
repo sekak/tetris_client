@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import socket from '../lib/socket'
 import Button from './ui/button'
@@ -9,6 +10,11 @@ const generateRoomId = () => Math.random().toString(36).slice(2, 8).toUpperCase(
 
 const GameEntry = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch({ type: 'CLEAR_JOIN_ERROR' })
+  }, [])
   const [mode, setMode] = useState<'' | 'create' | 'join'>('')
   const [pseudo, setPseudo] = useState<string>('')
   const [gameCode, setGameCode] = useState<string>('')
@@ -22,6 +28,7 @@ const GameEntry = () => {
   const handleCreate = () => {
     if (!pseudo.trim()) return
     const roomId = generateRoomId()
+    dispatch({ type: 'CLEAR_JOIN_ERROR' })
     navigate(`/${roomId}/${pseudo.trim()}`)
   }
 
@@ -34,6 +41,7 @@ const GameEntry = () => {
     socket.once('check_room', ({ exists, error }: { exists: boolean; error: string | null }) => {
       setChecking(false)
       if (exists) {
+        dispatch({ type: 'CLEAR_JOIN_ERROR' })
         navigate(`/${roomId}/${playerName}`)
       } else {
         setJoinError(error ?? 'Room introuvable')
